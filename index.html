@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Nosso Amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            padding-top: 80px;
+            text-align: center;
+        }
+        .music-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #1e1e1e;
+            border-bottom: 2px solid #e60026;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px #e60026;
+            z-index: 1000;
+            font-family: sans-serif;
+        }
+        .music-bar span {
+            color: #fff;
+            font-size: 16px;
+        }
+        .music-bar button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .slides {
+            display: none;
+            width: 350px;
+            height: auto;
+            border: 5px solid #e60026;
+            border-radius: 20px;
+            margin: 20px auto;
+            box-shadow: 0 0 20px #e60026;
+        }
+        .contador {
+            font-size: 26px;
+            margin-top: 20px;
+            color: #ff4d4d;
+        }
+        .texto-romantico {
+            margin: 40px auto;
+            font-size: 24px;
+            max-width: 700px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="music-bar">
+        <span>🎵 Nights Like This – The Kid LAROI</span>
+        <button onclick="toggleMusic()" id="playPause">▶️</button>
+    </div>
+
+    <h1 style="color:#ff1a4b;">Eu te amo há:</h1>
+    <div class="contador" id="contador"></div>
+
+    <div class="slideshow">
+        <img class="slides" src="img1.jpeg" alt="Foto 1">
+        <img class="slides" src="img2.jpeg" alt="Foto 2">
+        <img class="slides" src="img3.jpeg" alt="Foto 3">
+    </div>
+
+    <div class="texto-romantico">
+        Cada momento ao seu lado é um presente que a vida me deu. O seu sorriso ilumina os meus dias, e o seu abraço é o meu lugar favorito no mundo. Não importa quanto tempo passe, meu amor por você só cresce, se fortalece e se torna mais bonito. Obrigado por fazer parte da minha vida. Te amo para sempre!
+    </div>
+
+    <audio id="musica" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Seu navegador não suporta áudio.
+    </audio>
+
+    <script>
+        // Contador
+        const inicio = new Date("2025-02-02T00:00:00");
+        function atualizarContador() {
+            const agora = new Date();
+            const diff = agora - inicio;
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diff / (1000 * 60)) % 60);
+            const segundos = Math.floor((diff / 1000) % 60);
+            document.getElementById('contador').innerText =
+                `${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos`;
+        }
+        setInterval(atualizarContador, 1000);
+        atualizarContador();
+
+        // Slideshow
+        let slideIndex = 0;
+        function showSlides() {
+            const slides = document.getElementsByClassName("slides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000);
+        }
+        showSlides();
+
+        // Player estilo Spotify
+        const audio = document.getElementById("musica");
+        const playPauseBtn = document.getElementById("playPause");
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.textContent = "⏸️";
+            } else {
+                audio.pause();
+                playPauseBtn.textContent = "▶️";
+            }
+        }
+    </script>
+</body>
+</html>
